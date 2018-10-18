@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="msapplication-TileColor" content="#6441a4">
+<meta name="theme-color" content="#ffffff">
+<meta name="generator" content="Hugo 0.49.2" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#6441a4">
+<link rel="stylesheet" href="/css/style.min.add05d51c4724e98cb158ff74505e75450e4ff89f017c95a2e1733983e1c32c2.css" integrity="sha256-rdBdUcRyTpjLFY/3RQXnVFDk/4nwF8laLhczmD4cMsI="  />
+<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+<title>Glitch :: IntelliJ Setup</title><body class="fixed-nav-padding">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-purple">
+  <a class="navbar-brand" href="/"><img src="/img/logo/white.svg" alt="" /></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="/wiki">Wiki</a></li><li class="nav-item"><a class="nav-link" href="https://github.com/GlitchLib/glitch/releases">Releases</a></li><li class="nav-item"><a class="nav-link" href="/docs">Javadoc</a></li><li class="nav-item"><a class="nav-link" href="https://discord.gg/nJJ2fDM">Discord</a></li>
+      
+      <li class="nav-item"><a class="nav-link" href="https://github.com/GlitchLib/glitch">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+        <main role="main" class="container">
+<div class="row">
+  <div class="col-lg-3 order-lg-last">
+    <div class="wiki-menu-toggle d-lg-none pb-3">
+  <button class="btn btn-purple btn-block rounded" type="button" data-toggle="collapse" data-target="#wiki-menu" aria-controls="wiki-menu" aria-expanded="false" aria-label="Toggle Navigation">
+    Toggle Navigation
+  </button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="collapse show pb-3" id="wiki-menu">
+  
+  
+  
+  <h4>Getting Started</h4>
+  <div class="list-group">
+    
+    
+    <a class="list-group-item list-group-item-action" href="/wiki/getting-started/welcome/">Welcome</a>
+    
+    
+    <a class="list-group-item list-group-item-action active" href="/wiki/getting-started/intellij/">IntelliJ Setup</a>
+    
+    
+    <a class="list-group-item list-group-item-action" href="/wiki/getting-started/eclipse/">Eclipse Setup</a>
+    
+    
+    <a class="list-group-item list-group-item-action" href="/wiki/getting-started/netbeans/">Netbeans Setup</a>
+    
+    
+    <a class="list-group-item list-group-item-action" href="/wiki/getting-started/glossary/">Glossary</a>
+    
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+  </div>
+  <div class="col-lg-9 order-lg-first wiki-container">
+    <h1 id="wiki-headline">IntelliJ Setup</h1>
+    
+
+<h1 id="before-starting">Before Starting</h1>
+
+<p>Before start we need a download some tools to using our IDE.</p>
+
+<h3 id="download">Download</h3>
+
+<h4 id="java-development-kit-jdk">Java Development Kit (JDK)</h4>
+
+<p>Install it and configure environmental variables: <code>JAVA_HOME</code> if not exist, create and adding to <code>PATH</code> - <code>$JAVA_HOME/bin</code>.</p>
+
+<ul>
+<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">JDK8</a>.</li>
+<li><a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html">JDK10</a>.</li>
+<li><a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html">JDK11</a>.</li>
+</ul>
+
+<h4 id="integrated-development-environment-ide">Integrated Development Environment (IDE)</h4>
+
+<p><strong>IntelliJ IDEA</strong> is a special programming environment or <strong>Integrated Development Environment</strong> (IDE) largely meant for <strong>Java</strong>. This environment is used especially for the development of programs. It is developed by a company called <strong>JetBrains</strong>, which was formally called <strong>IntelliJ</strong>. It is available in two editions: the Community Edition which is licensed by Apache 2.0, and a commercial edition known as the Ultimate Edition. Both of them can be used for creating software which can be sold. What makes <strong>IntelliJ IDEA</strong> so different from its counterparts is its ease of use, flexibility and its solid design.</p>
+
+<ul>
+<li><a href="https://www.jetbrains.com/idea/#edition">Editions Comparison</a></li>
+<li><a href="https://www.jetbrains.com/idea/download/">Download</a></li>
+</ul>
+
+<h1 id="setup">Setup</h1>
+
+<ol>
+<li>Launch IDE</li>
+<li>Create New Project [<code>File</code> &gt; <code>New</code> &gt; <code>Project</code>]</li>
+<li>Select <code>Gradle</code></li>
+<li>Make sure if you select <code>Project SDK</code> to <code>1.8</code> or greater</li>
+<li>Click <code>Next</code></li>
+
+<li><p>Enter a <code>GroupId</code> (e.g. <code>com.github.yourname</code>)</p>
+
+<blockquote>
+<p>You can choose whatever you want</p>
+</blockquote></li>
+
+<li><p>Enter a <code>ArtifactId</code> (e.g. <code>bot</code>)</p>
+
+<blockquote>
+<p>You can choose whatever you want</p>
+</blockquote></li>
+</ol>
+
+    <div id="wiki-footer">Feel free to join <b>Glitch Discord server</b> if you have any questions: <a href="https://discord.gg/nJJ2fDM">Invite Link</a></div>
+    <p class="text-center">
+      
+      <a class="btn btn-purple" href="https://github.com/GlitchLib/glitchlib.github.io/edit/master/content/wiki/getting-started/intellij.md"> Improve this page</a>
+      
+    </p>
+  </div>
+</div>
+
+        </main><footer class="page-footer font-small purple pt-4">
+  <div class="container text-center text-md-left">
+    <div class="row">
+      <div class="col-md-4 mt-3 d-none d-md-block text-center">
+        <img class="text-align-center" src="/img/logo/white.svg" alt="" height="112" style="filter: grayscale(30%);">
+      </div>
+      <hr class="clearfix w-100 d-md-none pb-3">
+      <div class="col-md-4 mb-md-0 mb-3">
+          <h5 class="text-uppercase">Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="/wiki">Wiki</a></li><li><a href="https://github.com/GlitchLib/glitch/releases">Releases</a></li><li><a href="/docs">Javadoc</a></li><li><a href="https://discord.gg/nJJ2fDM">Discord</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-md-0 mb-3">
+          <h5 class="text-uppercase">Badges</h5>
+          <ul class="list-unstyled">
+            <li class="my-2">
+              <a class="badge-align" href="https://travis-ci.com/GlitchLib/glitch"><img src="https://travis-ci.com/GlitchLib/glitch.svg" alt="Status"></a>
+            </li>
+            <li class="my-2">
+              <a class="badge-align" href="https://www.codacy.com/app/GlitchLib/glitch?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=GlitchLib/glitch&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/752be0bdadda4598ae9336d5681bc370" alt="Quality" /></a>
+            </li>
+            <li class="my-2">
+              <a class="badge-align" href="https://discord.gg/jy9BKGq"><img src="https://discordapp.com/api/guilds/325552783787032576/widget.png" alt="Twitch API"></a>
+            </li>
+            <li class="my-2">
+              <a class="badge-align" href="https://discord.gg/nJJ2fDM"><img src="https://discordapp.com/api/guilds/488285226452385792/widget.png" alt="Glitch Discord"></a>
+            </li>
+          </ul>
+        </div>
+    </div>
+  </div>
+  <div class="footer-copyright text-center py-3">
+    Made with <span style="color: #e25555;">❤️</span> by <a href="https://github.com/stachu540">Damian Staszewski</a>
+  </div>
+</footer><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/mdb.min.js"></script></body>
+</html>
