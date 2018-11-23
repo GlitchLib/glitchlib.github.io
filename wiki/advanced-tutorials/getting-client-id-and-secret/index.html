@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="/css/style.min.adb98d49f2f0daef4231f1711b2af69cf3e6c7bc100eb464fa90205cc044f638.css" integrity="sha256-rbmNSfLw2u9CMfFxGyr2nPPmx7wQDrRk&#43;pAgXMBE9jg="  />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-<title>Glitch :: Glossary</title><body class="fixed-nav-padding">
+<title>Glitch :: Getting Client ID and Secret</title><body class="fixed-nav-padding">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-purple">
   <a class="navbar-brand" href="/"><img src="/img/logo/white.svg" alt="" /></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -146,7 +146,7 @@
     <a class="list-group-item list-group-item-action" href="/wiki/getting-started/netbeans/">Netbeans Setup</a>
     
     
-    <a class="list-group-item list-group-item-action active" href="/wiki/getting-started/glossary/">Glossary</a>
+    <a class="list-group-item list-group-item-action" href="/wiki/getting-started/glossary/">Glossary</a>
     
   </div>
   
@@ -188,7 +188,7 @@
   <div class="list-group">
     
     
-    <a class="list-group-item list-group-item-action" href="/wiki/advanced-tutorials/getting-client-id-and-secret/">Getting Client ID and Secret</a>
+    <a class="list-group-item list-group-item-action active" href="/wiki/advanced-tutorials/getting-client-id-and-secret/">Getting Client ID and Secret</a>
     
   </div>
   
@@ -230,21 +230,54 @@
 </div>
   </div>
   <div class="col-lg-9 order-lg-first wiki-container">
-    <h1 id="wiki-headline">Glossary</h1>
-    <ul>
-<li><strong><code>NPE</code></strong> - short of <code>NullPointerException</code></li>
-<li><strong><code>TMI</code></strong> - short of <strong>Twitch Message Interface</strong>, when it is implemented to <code>glitch-chat</code> module.</li>
-<li><strong><code>Reactive</code></strong> - asynchronicious non-blocking programming.</li>
-<li><strong><code>Rate Limits</code></strong> - preventing constantly spam interactions from querying, like <a href="https://dev.twitch.tv/docs/irc/guide/#command--message-limits"><code>TMI</code></a>, <a href="https://dev.twitch.tv/docs/api/guide/#rate-limits"><code>Helix</code></a>.</li>
-<li><strong><code>Pagination</code></strong> - always are be when query have multiple entries. There is a difference of <a href="https://dev.twitch.tv/docs/v5/#paging-through-results-cursor-vs-offset">Cursor and Offset</a></li>
-<li><strong><code>Chat Rooms</code></strong> - every channels does have additional chats called <strong>Chat Rooms</strong>, which can be previewed differently and have different join permissions; e.g., <em>general</em>, moderators-only, or subscribers-only</li>
-<li><strong><code>Twitch Staff</code></strong> - Moderator/Administrator of the Twitch Platform, and employeer aswell.</li>
-</ul>
+    <h1 id="wiki-headline">Getting Client ID and Secret</h1>
+    <blockquote class="alert alert-info" role="alert">
+All presented screenshots are be only on view. Presented <b>Client ID</b> and <b>Client Secret</b> would not to be worked.
+</blockquote>
+
+<ol>
+<li><p>Go to <a href="https://dev.twitch.tv/">https://dev.twitch.tv/</a>
+<img src="https://i.imgur.com/picDuQG.png" alt="step 1" class="img-fluid"/></p></li>
+
+<li><p><strong>Sign up with Twitch</strong> account <br/>
+<img src="https://i.imgur.com/kldJHvi.png" alt="step 2" class="img-fluid"/></p></li>
+
+<li><p>Go to <a href="https://dev.twitch.tv/dashboard">Your Dashboard</a>
+<img src="https://i.imgur.com/rbT7mG7.png" alt="step 3" class="img-fluid"/></p></li>
+
+<li><p>Get to the <code>Apps</code> tab or press <strong>View Apps</strong>
+<img src="https://i.imgur.com/udKATzs.png" alt="step 4" class="img-fluid"/></p></li>
+
+<li><p><strong>Register Your Application</strong>
+<img src="https://i.imgur.com/2ITNxaO.png" alt="step 5" class="img-fluid"/></p></li>
+
+<li><p>Fill the all of those fields.
+<img src="https://i.imgur.com/picDuQG.png" alt="step 6" class="img-fluid"/></p></li>
+
+<li><p>After filling fields press <strong>Create</strong>
+<img src="https://i.imgur.com/UgcD3to.png" alt="step 7" class="img-fluid"/></p></li>
+
+<li><p>Press <strong>Manage</strong> to get your created application details
+<img src="https://i.imgur.com/rVhpmEF.png" alt="step 8" class="img-fluid"/></p></li>
+
+<li><p>Now you can copy <strong>Client ID</strong>. To generate <strong>Client Secret</strong>, press <strong>New Secret</strong>
+<img src="https://i.imgur.com/4kJpSCf.png" alt="step 9" class="img-fluid"/></p></li>
+
+<li><p>Confirm this alerted question: <br />
+<img src="https://i.imgur.com/HDtQsNI.png" alt="step 10" class="img-fluid"/></p></li>
+
+<li><p>And now you can copy <strong>Client Secret</strong> too
+<img src="https://i.imgur.com/a8imJwm.png" alt="step 11" class="img-fluid"/></p></li>
+</ol>
+
+<blockquote class="alert alert-info" role="alert">
+If you are updating your website, make sure if your <b class="alert-link">OAuth Redirect URL</b> is setted up correctly.
+</blockquote>
 
     <div id="wiki-footer">Feel free to join <b>Glitch Discord server</b> if you have any questions: <a href="https://discord.gg/nJJ2fDM">Invite Link</a></div>
     <p class="text-center">
       
-      <a class="btn btn-purple" href="https://github.com/GlitchLib/page/edit/master/content/wiki/getting-started/glossary.md"><i class="fas fa-pencil-alt mr-2"></i> Improve this page</a>
+      <a class="btn btn-purple" href="https://github.com/GlitchLib/page/edit/master/content/wiki/advanced-tutorials/getting-client-id-and-secret.md"><i class="fas fa-pencil-alt mr-2"></i> Improve this page</a>
       
     </p>
   </div>

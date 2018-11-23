@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="/css/style.min.adb98d49f2f0daef4231f1711b2af69cf3e6c7bc100eb464fa90205cc044f638.css" integrity="sha256-rbmNSfLw2u9CMfFxGyr2nPPmx7wQDrRk&#43;pAgXMBE9jg="  />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-<title>Glitch :: Glossary</title><body class="fixed-nav-padding">
+<title>Glitch :: Message Interface</title><body class="fixed-nav-padding">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-purple">
   <a class="navbar-brand" href="/"><img src="/img/logo/white.svg" alt="" /></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -146,7 +146,7 @@
     <a class="list-group-item list-group-item-action" href="/wiki/getting-started/netbeans/">Netbeans Setup</a>
     
     
-    <a class="list-group-item list-group-item-action active" href="/wiki/getting-started/glossary/">Glossary</a>
+    <a class="list-group-item list-group-item-action" href="/wiki/getting-started/glossary/">Glossary</a>
     
   </div>
   
@@ -174,7 +174,7 @@
     <a class="list-group-item list-group-item-action" href="/wiki/basic-tutorials/client/">Intialize Client</a>
     
     
-    <a class="list-group-item list-group-item-action" href="/wiki/basic-tutorials/chat/">Message Interface</a>
+    <a class="list-group-item list-group-item-action active" href="/wiki/basic-tutorials/chat/">Message Interface</a>
     
     
     <a class="list-group-item list-group-item-action" href="/wiki/basic-tutorials/pubsub/">PubSub</a>
@@ -230,21 +230,70 @@
 </div>
   </div>
   <div class="col-lg-9 order-lg-first wiki-container">
-    <h1 id="wiki-headline">Glossary</h1>
-    <ul>
-<li><strong><code>NPE</code></strong> - short of <code>NullPointerException</code></li>
-<li><strong><code>TMI</code></strong> - short of <strong>Twitch Message Interface</strong>, when it is implemented to <code>glitch-chat</code> module.</li>
-<li><strong><code>Reactive</code></strong> - asynchronicious non-blocking programming.</li>
-<li><strong><code>Rate Limits</code></strong> - preventing constantly spam interactions from querying, like <a href="https://dev.twitch.tv/docs/irc/guide/#command--message-limits"><code>TMI</code></a>, <a href="https://dev.twitch.tv/docs/api/guide/#rate-limits"><code>Helix</code></a>.</li>
-<li><strong><code>Pagination</code></strong> - always are be when query have multiple entries. There is a difference of <a href="https://dev.twitch.tv/docs/v5/#paging-through-results-cursor-vs-offset">Cursor and Offset</a></li>
-<li><strong><code>Chat Rooms</code></strong> - every channels does have additional chats called <strong>Chat Rooms</strong>, which can be previewed differently and have different join permissions; e.g., <em>general</em>, moderators-only, or subscribers-only</li>
-<li><strong><code>Twitch Staff</code></strong> - Moderator/Administrator of the Twitch Platform, and employeer aswell.</li>
-</ul>
+    <h1 id="wiki-headline">Message Interface</h1>
+    
+
+<blockquote class="alert alert-info" role="alert">
+All endpoints will returns a <a href="https://projectreactor.io/docs/core/release/reference/#mono">Mono</a> or <a href="https://projectreactor.io/docs/core/release/reference/#flux">Flux</a> response. Other way will be commented <i>inside the example</i>.
+</blockquote>
+
+<blockquote class="alert alert-danger" role="alert">
+Some part of the events is not done yet. This documentations shows only example, they might be changed in time.
+</blockquote>
+
+<h1 id="getting-started">Getting Started</h1>
+
+<p>Before start we need initialize <a href="../client"><code>client</code></a> first at all. After initialization we can now getting into the <a href="#initialize-message-intereface-api">next step</a></p>
+
+<h2 id="initialize-message-intereface-api">Initialize Message Intereface API</h2>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">GlitchChat chat <span style="color:#555">=</span> GlitchChat<span style="color:#555">.</span><span style="color:#309">builder</span><span style="color:#555">(</span>client<span style="color:#555">)</span>
+        <span style="color:#555">.</span><span style="color:#309">botCredentials</span><span style="color:#555">(</span><span style="color:#c30">&#34;&lt;access_token&gt;&#34;</span><span style="color:#555">,</span> <span style="color:#c30">&#34;&lt;refresh_token&gt;&#34;</span><span style="color:#555">)</span>
+        <span style="color:#555">.</span><span style="color:#309">build</span><span style="color:#555">();</span> <span style="color:#09f;font-style:italic">// or .buildAsync() which returns Mono&lt;GlitchChat&gt;
+</span><span style="color:#09f;font-style:italic"></span>
+<span style="color:#09f;font-style:italic">// connecting
+</span><span style="color:#09f;font-style:italic"></span>chat<span style="color:#555">.</span><span style="color:#309">connect</span><span style="color:#555">().</span><span style="color:#309">block</span><span style="color:#555">();</span> <span style="color:#09f;font-style:italic">/* returns void - block() is required to execute connections */</span></code></pre></div>
+<h2 id="what-s-next">What&rsquo;s next?</h2>
+
+<p>The next step is create communications between channel and bot enviornment. This examples below will you meet them every time.</p>
+
+<h3 id="join-leave-channel">Join / Leave channel</h3>
+
+<p>This example presenting how to join channel, when you have initialized bot from builder (<strong>see: <a href="#initialize-message-intereface-api">how to initialize message interface</a></strong>)</p>
+
+<blockquote>
+<p>For e.g. We wana join to <code>twitch</code> channel.</p>
+</blockquote>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">chat<span style="color:#555">.</span><span style="color:#309">join</span><span style="color:#555">(</span><span style="color:#c30">&#34;twitch&#34;</span><span style="color:#555">);</span></code></pre></div>
+<p>Another sample is leaving bot from channel</p>
+
+<blockquote>
+<p>For e.g. We wana leaving already joined <code>twitch</code> channel.</p>
+</blockquote>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">chat<span style="color:#555">.</span><span style="color:#309">getChannel</span><span style="color:#555">(</span><span style="color:#c30">&#34;twitch&#34;</span><span style="color:#555">).</span><span style="color:#309">leave</span><span style="color:#555">().</span><span style="color:#309">subscribe</span><span style="color:#555">();</span> <span style="color:#09f;font-style:italic">/* subscribe)_ is necessarily to initialize leaving channel */</span></code></pre></div>
+<h3 id="get-chat-message">Get Chat message</h3>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">chat<span style="color:#555">.</span><span style="color:#309">on</span><span style="color:#555">(</span>MessageEvent<span style="color:#555">.</span><span style="color:#309">class</span><span style="color:#555">).</span><span style="color:#309">subscribe</span><span style="color:#555">(</span>event <span style="color:#555">-&gt;</span> <span style="color:#555">{</span>
+  <span style="color:#069;font-weight:bold">if</span> <span style="color:#555">(</span>event<span style="color:#555">.</span><span style="color:#309">getMessage</span><span style="color:#555">().</span><span style="color:#309">equalsIgnoreCase</span><span style="color:#555">(</span><span style="color:#c30">&#34;!ping&#34;</span><span style="color:#555">))</span> <span style="color:#555">{</span>
+    event<span style="color:#555">.</span><span style="color:#309">sendMessage</span><span style="color:#555">(</span>Mono<span style="color:#555">.</span><span style="color:#309">just</span><span style="color:#555">(</span>String<span style="color:#555">.</span><span style="color:#309">format</span><span style="color:#555">(</span><span style="color:#c30">&#34;%s, Pong!&#34;</span><span style="color:#555">,</span> event<span style="color:#555">.</span><span style="color:#309">getUser</span><span style="color:#555">().</span><span style="color:#309">getMentionable</span><span style="color:#555">())));</span>
+  <span style="color:#555">}</span>
+<span style="color:#555">});</span></code></pre></div>
+<h3 id="listen-all-moderation-actions">Listen all moderation actions</h3>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">chat<span style="color:#555">.</span><span style="color:#309">on</span><span style="color:#555">(</span>ModerationEvent<span style="color:#555">.</span><span style="color:#309">class</span><span style="color:#555">).</span><span style="color:#309">subscribe</span><span style="color:#555">(</span>event <span style="color:#555">-&gt;</span> <span style="color:#555">{</span>
+  <span style="color:#069;font-weight:bold">if</span> <span style="color:#555">(</span>event<span style="color:#555">.</span><span style="color:#309">getAction</span><span style="color:#555">()</span> <span style="color:#555">==</span> ModerationAction<span style="color:#555">.</span><span style="color:#309">BAN</span><span style="color:#555">)</span> <span style="color:#555">{</span>
+    event<span style="color:#555">.</span><span style="color:#309">sendMessage</span><span style="color:#555">(</span>Mono<span style="color:#555">.</span><span style="color:#309">just</span><span style="color:#555">(</span>String<span style="color:#555">.</span><span style="color:#309">format</span><span style="color:#555">(</span><span style="color:#c30">&#34;%s has been banned from this channel!&#34;</span><span style="color:#555">,</span> event<span style="color:#555">.</span><span style="color:#309">getUser</span><span style="color:#555">().</span><span style="color:#309">getMentionable</span><span style="color:#555">())));</span>
+  <span style="color:#555">}</span>
+<span style="color:#555">});</span>
+<span style="color:#555">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> HEAD</code></pre></div>
+<h2 id="using-commands-api">Using Commands API</h2>
+
+<h1 id="soon-tm">Soon ™️</h1>
+
+<p>```
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 95c80893995225e4606eab6af2d7a3cd2a60bbce</p>
 
     <div id="wiki-footer">Feel free to join <b>Glitch Discord server</b> if you have any questions: <a href="https://discord.gg/nJJ2fDM">Invite Link</a></div>
     <p class="text-center">
       
-      <a class="btn btn-purple" href="https://github.com/GlitchLib/page/edit/master/content/wiki/getting-started/glossary.md"><i class="fas fa-pencil-alt mr-2"></i> Improve this page</a>
+      <a class="btn btn-purple" href="https://github.com/GlitchLib/page/edit/master/content/wiki/basic-tutorials/chat.md"><i class="fas fa-pencil-alt mr-2"></i> Improve this page</a>
       
     </p>
   </div>

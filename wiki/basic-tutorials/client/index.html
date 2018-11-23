@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="/css/style.min.adb98d49f2f0daef4231f1711b2af69cf3e6c7bc100eb464fa90205cc044f638.css" integrity="sha256-rbmNSfLw2u9CMfFxGyr2nPPmx7wQDrRk&#43;pAgXMBE9jg="  />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-<title>Glitch :: Glossary</title><body class="fixed-nav-padding">
+<title>Glitch :: Intialize Client</title><body class="fixed-nav-padding">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-purple">
   <a class="navbar-brand" href="/"><img src="/img/logo/white.svg" alt="" /></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -146,7 +146,7 @@
     <a class="list-group-item list-group-item-action" href="/wiki/getting-started/netbeans/">Netbeans Setup</a>
     
     
-    <a class="list-group-item list-group-item-action active" href="/wiki/getting-started/glossary/">Glossary</a>
+    <a class="list-group-item list-group-item-action" href="/wiki/getting-started/glossary/">Glossary</a>
     
   </div>
   
@@ -171,7 +171,7 @@
   <div class="list-group">
     
     
-    <a class="list-group-item list-group-item-action" href="/wiki/basic-tutorials/client/">Intialize Client</a>
+    <a class="list-group-item list-group-item-action active" href="/wiki/basic-tutorials/client/">Intialize Client</a>
     
     
     <a class="list-group-item list-group-item-action" href="/wiki/basic-tutorials/chat/">Message Interface</a>
@@ -230,21 +230,52 @@
 </div>
   </div>
   <div class="col-lg-9 order-lg-first wiki-container">
-    <h1 id="wiki-headline">Glossary</h1>
-    <ul>
-<li><strong><code>NPE</code></strong> - short of <code>NullPointerException</code></li>
-<li><strong><code>TMI</code></strong> - short of <strong>Twitch Message Interface</strong>, when it is implemented to <code>glitch-chat</code> module.</li>
-<li><strong><code>Reactive</code></strong> - asynchronicious non-blocking programming.</li>
-<li><strong><code>Rate Limits</code></strong> - preventing constantly spam interactions from querying, like <a href="https://dev.twitch.tv/docs/irc/guide/#command--message-limits"><code>TMI</code></a>, <a href="https://dev.twitch.tv/docs/api/guide/#rate-limits"><code>Helix</code></a>.</li>
-<li><strong><code>Pagination</code></strong> - always are be when query have multiple entries. There is a difference of <a href="https://dev.twitch.tv/docs/v5/#paging-through-results-cursor-vs-offset">Cursor and Offset</a></li>
-<li><strong><code>Chat Rooms</code></strong> - every channels does have additional chats called <strong>Chat Rooms</strong>, which can be previewed differently and have different join permissions; e.g., <em>general</em>, moderators-only, or subscribers-only</li>
-<li><strong><code>Twitch Staff</code></strong> - Moderator/Administrator of the Twitch Platform, and employeer aswell.</li>
-</ul>
+    <h1 id="wiki-headline">Intialize Client</h1>
+    
 
+<blockquote class="alert alert-info" role="alert">
+All endpoints will returns a <a href="https://projectreactor.io/docs/core/release/reference/#mono">Mono</a> or <a href="https://projectreactor.io/docs/core/release/reference/#flux">Flux</a> response. Other way will be commented <i>inside the example</i>.
+</blockquote>
+
+<h1 id="initialization-client">Initialization Client</h1>
+
+<p>For starting initialization <code>GlitchClient</code> we need a <code>client_id</code> and <code>client_secret</code> to this important creation process. How to get them, you will find out <a href="/wiki/advanced-tutorials/getting-client-id-and-secret/">over here</a>.</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">GlitchClient client <span style="color:#555">=</span> GlitchClient<span style="color:#555">.</span><span style="color:#309">builder</span><span style="color:#555">()</span>
+            <span style="color:#555">.</span><span style="color:#309">clientId</span><span style="color:#555">(</span><span style="color:#c30">&#34;&lt;client_id&gt;&#34;</span><span style="color:#555">)</span>
+            <span style="color:#555">.</span><span style="color:#309">clientSecret</span><span style="color:#555">(</span><span style="color:#c30">&#34;&lt;client_secret&gt;&#34;</span><span style="color:#555">)</span>
+            <span style="color:#555">.</span><span style="color:#309">credentialStorage</span><span style="color:#555">(</span><span style="color:#069;font-weight:bold">new</span> MyCredentialStorage<span style="color:#555">())</span> <span style="color:#09f;font-style:italic">// a custom implementation of CredentialStorage
+</span><span style="color:#09f;font-style:italic"></span>            <span style="color:#555">.</span><span style="color:#309">defaultScopes</span><span style="color:#555">(</span>Scope<span style="color:#555">.</span><span style="color:#309">USER_READ</span><span style="color:#555">)</span>
+            <span style="color:#555">.</span><span style="color:#309">build</span><span style="color:#555">();</span> <span style="color:#555">//</span> or <span style="color:#555">.</span><span style="color:#309">buildAsync</span><span style="color:#555">()</span> when returns Mono<span style="color:#555">&lt;</span>GlitchClient<span style="color:#555">&gt;</span></code></pre></div>
+<h1 id="authorize-user">Authorize User</h1>
+
+<p><code>GlitchClient</code> provides <code>OAuth</code> client ready for implementation to your server. Examples below shows how to using them propertly.</p>
+
+<h2 id="getting-from-storage">Getting from Storage</h2>
+
+<p>Everytime when you executing <a href="/docs/latest/all/glitch/auth/CredentialManager.html#create(java.lang.String,java.lang.String)"><code>create()</code></a> or <a href="/docs/latest/all/glitch/auth/CredentialManager.html#buildFromCredentials(glitch.auth.UserCredential)"><code>buildFromCredentials()</code></a> methods from <a href="/docs/latest/all/glitch/auth/CredentialManager.html"><code>CredentialManager</code></a> will automatically add your <a href="/docs/latest/all/glitch/auth/objects/json/Credential.html"><code>Credential</code></a> to credential <a href="/docs/latest/all/glitch/auth/store/Storage.html"><code>Storage</code></a>.</p>
+
+<h3 id="getting-user-by-name">Getting user by name</h3>
+
+<blockquote class="alert alert-danger" role="alert">
+For getting users with ignore case or soemthing else, please take a look more details about <a href="https://www.tutorialspoint.com/java/java_regular_expressions.htm">Regular Expressions</a>
+</blockquote>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">client<span style="color:#555">.</span><span style="color:#309">getCredentialManager</span><span style="color:#555">().</span><span style="color:#309">getCredentialStorage</span><span style="color:#555">().</span><span style="color:#309">getByLogin</span><span style="color:#555">(</span><span style="color:#c30">&#34;^(?i:twitch)&#34;</span><span style="color:#555">);</span></code></pre></div>
+<h2 id="register-a-new-credential">Register a new Credential</h2>
+
+<p>To creating credential you need a <code>access_token</code> and <code>refresh_token</code>.</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">client<span style="color:#555">.</span><span style="color:#309">getCredentialManager</span><span style="color:#555">().</span><span style="color:#309">buildFromCredentials</span><span style="color:#555">(</span><span style="color:#c30">&#34;&lt;access_token&gt;&#34;</span><span style="color:#555">,</span> <span style="color:#c30">&#34;&lt;refresh_token&gt;&#34;</span><span style="color:#555">);</span></code></pre></div>
+<h2 id="authorizing-user">Authorizing user</h2>
+
+<blockquote class="alert alert-danger" role="alert">
+This library support only <a href="https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#oauth-authorization-code-flow">Authorization Code Flow</a>
+</blockquote>
+
+<p>To authorizing user via OAuth2 we need provide <code>base_url</code> of your service and <code>code</code> (from your query parameter) when it is authorization code for creating your credentials.</p>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">client<span style="color:#555">.</span><span style="color:#309">getCredentialManager</span><span style="color:#555">().</span><span style="color:#309">create</span><span style="color:#555">(</span><span style="color:#c30">&#34;&lt;code&gt;&#34;</span><span style="color:#555">,</span> <span style="color:#c30">&#34;&lt;base_url&gt;&#34;</span><span style="color:#555">);</span></code></pre></div>
     <div id="wiki-footer">Feel free to join <b>Glitch Discord server</b> if you have any questions: <a href="https://discord.gg/nJJ2fDM">Invite Link</a></div>
     <p class="text-center">
       
-      <a class="btn btn-purple" href="https://github.com/GlitchLib/page/edit/master/content/wiki/getting-started/glossary.md"><i class="fas fa-pencil-alt mr-2"></i> Improve this page</a>
+      <a class="btn btn-purple" href="https://github.com/GlitchLib/page/edit/master/content/wiki/basic-tutorials/client.md"><i class="fas fa-pencil-alt mr-2"></i> Improve this page</a>
       
     </p>
   </div>

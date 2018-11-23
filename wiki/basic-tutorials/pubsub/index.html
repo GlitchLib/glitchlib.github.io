@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="/css/style.min.adb98d49f2f0daef4231f1711b2af69cf3e6c7bc100eb464fa90205cc044f638.css" integrity="sha256-rbmNSfLw2u9CMfFxGyr2nPPmx7wQDrRk&#43;pAgXMBE9jg="  />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-<title>Glitch :: Glossary</title><body class="fixed-nav-padding">
+<title>Glitch :: PubSub</title><body class="fixed-nav-padding">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-purple">
   <a class="navbar-brand" href="/"><img src="/img/logo/white.svg" alt="" /></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -146,7 +146,7 @@
     <a class="list-group-item list-group-item-action" href="/wiki/getting-started/netbeans/">Netbeans Setup</a>
     
     
-    <a class="list-group-item list-group-item-action active" href="/wiki/getting-started/glossary/">Glossary</a>
+    <a class="list-group-item list-group-item-action" href="/wiki/getting-started/glossary/">Glossary</a>
     
   </div>
   
@@ -177,7 +177,7 @@
     <a class="list-group-item list-group-item-action" href="/wiki/basic-tutorials/chat/">Message Interface</a>
     
     
-    <a class="list-group-item list-group-item-action" href="/wiki/basic-tutorials/pubsub/">PubSub</a>
+    <a class="list-group-item list-group-item-action active" href="/wiki/basic-tutorials/pubsub/">PubSub</a>
     
   </div>
   
@@ -230,21 +230,39 @@
 </div>
   </div>
   <div class="col-lg-9 order-lg-first wiki-container">
-    <h1 id="wiki-headline">Glossary</h1>
-    <ul>
-<li><strong><code>NPE</code></strong> - short of <code>NullPointerException</code></li>
-<li><strong><code>TMI</code></strong> - short of <strong>Twitch Message Interface</strong>, when it is implemented to <code>glitch-chat</code> module.</li>
-<li><strong><code>Reactive</code></strong> - asynchronicious non-blocking programming.</li>
-<li><strong><code>Rate Limits</code></strong> - preventing constantly spam interactions from querying, like <a href="https://dev.twitch.tv/docs/irc/guide/#command--message-limits"><code>TMI</code></a>, <a href="https://dev.twitch.tv/docs/api/guide/#rate-limits"><code>Helix</code></a>.</li>
-<li><strong><code>Pagination</code></strong> - always are be when query have multiple entries. There is a difference of <a href="https://dev.twitch.tv/docs/v5/#paging-through-results-cursor-vs-offset">Cursor and Offset</a></li>
-<li><strong><code>Chat Rooms</code></strong> - every channels does have additional chats called <strong>Chat Rooms</strong>, which can be previewed differently and have different join permissions; e.g., <em>general</em>, moderators-only, or subscribers-only</li>
-<li><strong><code>Twitch Staff</code></strong> - Moderator/Administrator of the Twitch Platform, and employeer aswell.</li>
-</ul>
+    <h1 id="wiki-headline">PubSub</h1>
+    
 
+<blockquote class="alert alert-info" role="alert">
+All endpoints will returns a <a href="https://projectreactor.io/docs/core/release/reference/#mono">Mono</a> or <a href="https://projectreactor.io/docs/core/release/reference/#flux">Flux</a> response. Other way will be commented <i>inside the example</i>.
+</blockquote>
+
+<blockquote class="alert alert-danger" role="alert">
+Currently <b class="alert-link">Extension Broadcast System</b> is not supported on this library. In the next releases will be supporting aswell.
+</blockquote>
+
+<h1 id="getting-started">Getting Started</h1>
+
+<p>Before start we need initialize <a href="../client"><code>client</code></a> first at all. After initialization we can now getting into the <a href="#initialize-message-intereface-api">next step</a></p>
+
+<h2 id="initialization-client">Initialization Client</h2>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">GlitchPubSub client <span style="color:#555">=</span> GlitchPubSub<span style="color:#555">.</span><span style="color:#309">builder</span><span style="color:#555">(</span>client<span style="color:#555">)</span>
+              <span style="color:#09f;font-style:italic">// register topic after initialize connection
+</span><span style="color:#09f;font-style:italic"></span>              <span style="color:#555">.</span><span style="color:#309">activateTopic</span><span style="color:#555">(</span>Topic<span style="color:#555">.</span><span style="color:#309">videoPlayback</span><span style="color:#555">(</span><span style="color:#c30">&#34;&lt;channel_name&gt;&#34;</span><span style="color:#555">))</span>
+              <span style="color:#09f;font-style:italic">// register topic and don&#39;t activate it
+</span><span style="color:#09f;font-style:italic"></span>              <span style="color:#555">.</span><span style="color:#309">setTopic</span><span style="color:#555">(</span>Topic<span style="color:#555">.</span><span style="color:#309">following</span><span style="color:#555">(&lt;</span>channel_id<span style="color:#555">&gt;))</span>
+              <span style="color:#555">.</span><span style="color:#309">build</span><span style="color:#555">();</span> <span style="color:#09f;font-style:italic">// or .buildAsync() which returns Mono&lt;GlitchPubSub&gt;
+</span><span style="color:#09f;font-style:italic"></span>
+<span style="color:#09f;font-style:italic">// connecting
+</span><span style="color:#09f;font-style:italic"></span>chat<span style="color:#555">.</span><span style="color:#309">connect</span><span style="color:#555">().</span><span style="color:#309">block</span><span style="color:#555">();</span> <span style="color:#09f;font-style:italic">/* returns void - block() is required to execute connections */</span></code></pre></div>
+<h2 id="listening-who-s-following-a-channel">Listening who&rsquo;s following a channel</h2>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">client<span style="color:#555">.</span><span style="color:#309">listenOn</span><span style="color:#555">(</span>FollowEvent<span style="color:#555">.</span><span style="color:#309">class</span><span style="color:#555">).</span><span style="color:#309">subscribe</span><span style="color:#555">(</span>event <span style="color:#555">-&gt;</span> <span style="color:#555">{</span>
+  System<span style="color:#555">.</span><span style="color:#309">out</span><span style="color:#555">.</span><span style="color:#309">println</span><span style="color:#555">(</span>String<span style="color:#555">.</span><span style="color:#309">format</span><span style="color:#555">(</span><span style="color:#c30">&#34;%s is following the channel!&#34;</span><span style="color:#555">,</span> event<span style="color:#555">.</span><span style="color:#309">getData</span><span style="color:#555">().</span><span style="color:#309">getUsername</span><span style="color:#555">()));</span>
+<span style="color:#555">});</span></code></pre></div>
     <div id="wiki-footer">Feel free to join <b>Glitch Discord server</b> if you have any questions: <a href="https://discord.gg/nJJ2fDM">Invite Link</a></div>
     <p class="text-center">
       
-      <a class="btn btn-purple" href="https://github.com/GlitchLib/page/edit/master/content/wiki/getting-started/glossary.md"><i class="fas fa-pencil-alt mr-2"></i> Improve this page</a>
+      <a class="btn btn-purple" href="https://github.com/GlitchLib/page/edit/master/content/wiki/basic-tutorials/pubsub.md"><i class="fas fa-pencil-alt mr-2"></i> Improve this page</a>
       
     </p>
   </div>
