@@ -252,6 +252,30 @@ Currently <b class="alert-link">Extension Broadcast System</b> is not supported 
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">client<span style="color:#555">.</span><span style="color:#309">listenOn</span><span style="color:#555">(</span>FollowEvent<span style="color:#555">.</span><span style="color:#309">class</span><span style="color:#555">).</span><span style="color:#309">subscribe</span><span style="color:#555">(</span>event <span style="color:#555">-&gt;</span> <span style="color:#555">{</span>
   System<span style="color:#555">.</span><span style="color:#309">out</span><span style="color:#555">.</span><span style="color:#309">println</span><span style="color:#555">(</span>String<span style="color:#555">.</span><span style="color:#309">format</span><span style="color:#555">(</span><span style="color:#c30">&#34;%s is following the channel!&#34;</span><span style="color:#555">,</span> event<span style="color:#555">.</span><span style="color:#309">getData</span><span style="color:#555">().</span><span style="color:#309">getUsername</span><span style="color:#555">()));</span>
 <span style="color:#555">});</span></code></pre></div>
+<h2 id="getting-streams-in-live">Getting streams in live</h2>
+
+<p>First we need initialize required topic which is <code>Topic.videoPlayback​(&quot;&lt;user_name&gt;&quot;)</code> (not Display Name)</p>
+
+<h3 id="stream-starting">Stream starting</h3>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">client<span style="color:#555">.</span><span style="color:#309">listenOn</span><span style="color:#555">(</span>StreamUpEvent<span style="color:#555">.</span><span style="color:#309">class</span><span style="color:#555">).</span><span style="color:#309">subscribe</span><span style="color:#555">(</span>event <span style="color:#555">-&gt;</span> <span style="color:#555">{</span>
+  System<span style="color:#555">.</span><span style="color:#309">out</span><span style="color:#555">.</span><span style="color:#309">println</span><span style="color:#555">(</span>String<span style="color:#555">.</span><span style="color:#309">format</span><span style="color:#555">(</span><span style="color:#c30">&#34;[%s] Channel %s is starting stream with delay: %d!&#34;</span><span style="color:#555">,</span>
+          event<span style="color:#555">.</span><span style="color:#309">getData</span><span style="color:#555">().</span><span style="color:#309">getServerTime</span><span style="color:#555">().</span><span style="color:#309">toString</span><span style="color:#555">(),</span>
+          event<span style="color:#555">.</span><span style="color:#309">getData</span><span style="color:#555">().</span><span style="color:#309">getTopic</span><span style="color:#555">().</span><span style="color:#309">getSuffix</span><span style="color:#555">()[</span>0<span style="color:#555">],</span>
+          event<span style="color:#555">.</span><span style="color:#309">getData</span><span style="color:#555">().</span><span style="color:#309">getDelay</span><span style="color:#555">()));</span>
+<span style="color:#555">});</span></code></pre></div>
+<h3 id="viewer-count">Viewer Count</h3>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">client<span style="color:#555">.</span><span style="color:#309">listenOn</span><span style="color:#555">(</span>ViewCountEvent<span style="color:#555">.</span><span style="color:#309">class</span><span style="color:#555">).</span><span style="color:#309">subscribe</span><span style="color:#555">(</span>event <span style="color:#555">-&gt;</span> <span style="color:#555">{</span>
+  System<span style="color:#555">.</span><span style="color:#309">out</span><span style="color:#555">.</span><span style="color:#309">println</span><span style="color:#555">(</span>String<span style="color:#555">.</span><span style="color:#309">format</span><span style="color:#555">(</span><span style="color:#c30">&#34;[%s] Channel %s viwers: %d!&#34;</span><span style="color:#555">,</span>
+          event<span style="color:#555">.</span><span style="color:#309">getData</span><span style="color:#555">().</span><span style="color:#309">getServerTime</span><span style="color:#555">().</span><span style="color:#309">toString</span><span style="color:#555">(),</span>
+          event<span style="color:#555">.</span><span style="color:#309">getData</span><span style="color:#555">().</span><span style="color:#309">getTopic</span><span style="color:#555">().</span><span style="color:#309">getSuffix</span><span style="color:#555">()[</span>0<span style="color:#555">],</span>
+          event<span style="color:#555">.</span><span style="color:#309">getData</span><span style="color:#555">().</span><span style="color:#309">getViewers</span><span style="color:#555">()));</span>
+<span style="color:#555">});</span></code></pre></div>
+<h3 id="stream-stopping">Stream stopping</h3>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">client<span style="color:#555">.</span><span style="color:#309">listenOn</span><span style="color:#555">(</span>StreamDownEvent<span style="color:#555">.</span><span style="color:#309">class</span><span style="color:#555">).</span><span style="color:#309">subscribe</span><span style="color:#555">(</span>event <span style="color:#555">-&gt;</span> <span style="color:#555">{</span>
+  System<span style="color:#555">.</span><span style="color:#309">out</span><span style="color:#555">.</span><span style="color:#309">println</span><span style="color:#555">(</span>String<span style="color:#555">.</span><span style="color:#309">format</span><span style="color:#555">(</span><span style="color:#c30">&#34;[%s] Channel %s has been stopped!&#34;</span><span style="color:#555">,</span>
+          event<span style="color:#555">.</span><span style="color:#309">getData</span><span style="color:#555">().</span><span style="color:#309">getServerTime</span><span style="color:#555">().</span><span style="color:#309">toString</span><span style="color:#555">(),</span>
+          event<span style="color:#555">.</span><span style="color:#309">getData</span><span style="color:#555">().</span><span style="color:#309">getTopic</span><span style="color:#555">().</span><span style="color:#309">getSuffix</span><span style="color:#555">()[</span>0<span style="color:#555">]));</span>
+<span style="color:#555">});</span></code></pre></div>
     <div id="wiki-footer">Feel free to join <b>Glitch Discord server</b> if you have any questions: <a href="https://discord.gg/nJJ2fDM">Invite Link</a></div>
     <p class="text-center">
       
@@ -278,16 +302,24 @@ Currently <b class="alert-link">Extension Broadcast System</b> is not supported 
           <h5 class="text-uppercase">Badges</h5>
           <ul class="list-unstyled">
             <li class="my-2">
-              <a class="badge-align" href="https://travis-ci.com/GlitchLib/glitch"><img src="https://travis-ci.com/GlitchLib/glitch.svg" alt="Status"></a>
+              <a class="badge-align" href="https://travis-ci.com/GlitchLib/glitch">
+                <img src="https://travis-ci.com/GlitchLib/glitch.svg" alt="Status">
+              </a>
             </li>
             <li class="my-2">
-              <a class="badge-align" href="https://www.codacy.com/app/GlitchLib/glitch?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=GlitchLib/glitch&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/752be0bdadda4598ae9336d5681bc370" alt="Quality" /></a>
+              <a class="badge-align" href="https://www.codacy.com/app/GlitchLib/glitch?utm_source=glitchlib.github.io&amp;utm_medium=referral&amp;utm_content=GlitchLib/glitch&amp;utm_campaign=Badge_Grade">
+                <img src="https://api.codacy.com/project/badge/Grade/752be0bdadda4598ae9336d5681bc370" alt="Quality" />
+              </a>
             </li>
             <li class="my-2">
-              <a class="badge-align" href="https://discord.gg/jy9BKGq"><img src="https://discordapp.com/api/guilds/325552783787032576/widget.png" alt="Twitch API"></a>
+              <a class="badge-align" href="https://discord.gg/jy9BKGq">
+                <img src="https://discordapp.com/api/guilds/325552783787032576/widget.png" alt="Twitch API">
+              </a>
             </li>
             <li class="my-2">
-              <a class="badge-align" href="https://discord.gg/nJJ2fDM"><img src="https://discordapp.com/api/guilds/488285226452385792/widget.png" alt="Glitch Discord"></a>
+              <a class="badge-align" href="https://discord.gg/nJJ2fDM">
+                <img src="https://discordapp.com/api/guilds/488285226452385792/widget.png" alt="Glitch Discord">
+              </a>
             </li>
           </ul>
         </div>
