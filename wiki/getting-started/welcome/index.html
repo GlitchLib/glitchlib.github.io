@@ -6,13 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="msapplication-TileColor" content="#6441a4">
 <meta name="theme-color" content="#ffffff">
-<meta name="generator" content="Hugo 0.52" />
+<meta name="generator" content="Hugo 0.54.0" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#6441a4">
-<link rel="stylesheet" href="/css/style.min.adb98d49f2f0daef4231f1711b2af69cf3e6c7bc100eb464fa90205cc044f638.css" integrity="sha256-rbmNSfLw2u9CMfFxGyr2nPPmx7wQDrRk&#43;pAgXMBE9jg="  />
+<link rel="stylesheet" href="/css/style.min.7af6ce4c77d40dc0befaa6c5b301be234ffb06e4d9e3a2cf4a43dda4922bb283.css" integrity="sha256-evbOTHfUDcC&#43;&#43;qbFswG&#43;I0/7BuTZ46LPSkPdpJIrsoM="  />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 <title>Glitch :: Welcome</title><body class="fixed-nav-padding">
@@ -44,10 +44,6 @@
     Toggle Navigation
   </button>
 </div>
-
-
-
-
 
 
 
@@ -212,9 +208,6 @@
     <a class="list-group-item list-group-item-action" href="/wiki/miscellaneous/bot-account/">Bot Account</a>
     
     
-    <a class="list-group-item list-group-item-action" href="/wiki/miscellaneous/project-lombok/">Project Lombok</a>
-    
-    
     <a class="list-group-item list-group-item-action" href="/wiki/miscellaneous/guidelines/">Guidelines</a>
     
   </div>
@@ -240,7 +233,32 @@
 
 <h3 id="dependency">Dependency</h3>
 
-<h4 id="gradle-groovy-dsl">Gradle - Groovy DSL</h4>
+<h4 id="gradle">Gradle</h4>
+
+<h5 id="using-glitch-bom">Using <code>glitch-bom</code></h5>
+
+<p>In Gradle 5.0+ you will not need a Spring Dependency Management, because in this version managed dependency has been implemented. Older versions needs to manage dependecy if you using <code>glitch-bom</code>.</p>
+
+<h5 id="groovy-dsl">Groovy-DSL</h5>
+
+<ul>
+<li><code>5.0+</code></li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy">repositories <span style="color:#555">{</span>
+  jcenter<span style="color:#555">()</span>
+  maven <span style="color:#555">{</span> url <span style="color:#c30">&#34;https://dl.bintray.com/stachu540/GlitchLib&#34;</span> <span style="color:#555">}</span>
+<span style="color:#555">}</span>
+
+dependencies <span style="color:#555">{</span>
+  compile <span style="color:#c0f">enforcedPlatform</span><span style="color:#555">(</span><span style="color:#c30">&#34;io.glitchlib:glitch-bom:$glitch_version&#34;</span><span style="color:#555">)</span>
+  compile <span style="color:#c30">&#34;io.glitchlib:glitch-core&#34;</span>
+  compile <span style="color:#c30">&#34;io.glitchlib:glitch-kraken&#34;</span>
+  <span style="color:#09f;font-style:italic">// also you can use glitch-all without using BOM
+</span><span style="color:#09f;font-style:italic"></span>  compile <span style="color:#c30">&#34;io.glitchlib:glitch-all:$glitch_version&#34;</span>
+<span style="color:#555">}</span></code></pre></div>
+<ul>
+<li>Older</li>
+</ul>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy">plugins <span style="color:#555">{</span>
   id <span style="color:#c30">&#34;io.spring.dependency-management&#34;</span> version <span style="color:#c30">&#34;1.0.6.RELEASE&#34;</span>
 <span style="color:#555">}</span>
@@ -252,15 +270,36 @@ repositories <span style="color:#555">{</span>
 
 dependencyManagement <span style="color:#555">{</span>
   imports <span style="color:#555">{</span>
-    mavenBom <span style="color:#c30">&#34;io.glitchlib:glitch-BOM:$glitch_version&#34;</span>
+    mavenBom <span style="color:#c30">&#34;io.glitchlib:glitch-bom:$glitch_version&#34;</span>
   <span style="color:#555">}</span>
 <span style="color:#555">}</span>
 
 dependencies <span style="color:#555">{</span>
   compile <span style="color:#c30">&#34;io.glitchlib:glitch-core&#34;</span>
   compile <span style="color:#c30">&#34;io.glitchlib:glitch-kraken&#34;</span>
+  <span style="color:#09f;font-style:italic">// also you can use glitch-all without using BOM
+</span><span style="color:#09f;font-style:italic"></span>  compile <span style="color:#c30">&#34;io.glitchlib:glitch-all:$glitch_version&#34;</span>
 <span style="color:#555">}</span></code></pre></div>
-<h4 id="gradle-kotlin-dsl">Gradle - Kotlin DSL</h4>
+<h5 id="kotlin-dsl">Kotlin-DSL</h5>
+
+<ul>
+<li><code>5.0+</code></li>
+</ul>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">repositories {
+  jcenter()
+  maven(<span style="color:#c30">&#34;https://dl.bintray.com/stachu540/GlitchLib&#34;</span>)
+}
+
+dependencies {
+  compile(enforcedPlatform(<span style="color:#c30">&#34;io.glitchlib:glitch-bom:$glitch_version&#34;</span>))
+  compile(<span style="color:#c30">&#34;io.glitchlib:glitch-core&#34;</span>)
+  compile(<span style="color:#c30">&#34;io.glitchlib:glitch-kraken&#34;</span>)
+  <span style="color:#09f;font-style:italic">// also you can use glitch-all without using BOM
+</span><span style="color:#09f;font-style:italic"></span>  compile(<span style="color:#c30">&#34;io.glitchlib:glitch-all:$glitch_version&#34;</span>)
+}</code></pre></div>
+<ul>
+<li>Older</li>
+</ul>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">plugins {
   id(<span style="color:#c30">&#34;io.spring.dependency-management&#34;</span>) version <span style="color:#c30">&#34;1.0.6.RELEASE&#34;</span>
 }
@@ -279,6 +318,8 @@ configure&lt;DependencyManagementExtension&gt; {
 dependencies {
   compile(<span style="color:#c30">&#34;io.glitchlib:glitch-core&#34;</span>)
   compile(<span style="color:#c30">&#34;io.glitchlib:glitch-kraken&#34;</span>)
+  <span style="color:#09f;font-style:italic">// also you can use glitch-all without using BOM
+</span><span style="color:#09f;font-style:italic"></span>  compile(<span style="color:#c30">&#34;io.glitchlib:glitch-all:$glitch_version&#34;</span>)
 }</code></pre></div>
 <h4 id="maven">Maven</h4>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#309;font-weight:bold">&lt;repositories&gt;</span>
@@ -308,6 +349,12 @@ dependencies {
   <span style="color:#309;font-weight:bold">&lt;dependency&gt;</span>
     <span style="color:#309;font-weight:bold">&lt;groupId&gt;</span>io.glitchlib<span style="color:#309;font-weight:bold">&lt;/groupId&gt;</span>
     <span style="color:#309;font-weight:bold">&lt;artifactId&gt;</span>glitch-kraken<span style="color:#309;font-weight:bold">&lt;/artifactId&gt;</span>
+  <span style="color:#309;font-weight:bold">&lt;/dependency&gt;</span>
+  <span style="color:#09f;font-style:italic">&lt;!-- also you can use glitch-all without using BOM --&gt;</span>
+  <span style="color:#309;font-weight:bold">&lt;dependency&gt;</span>
+    <span style="color:#309;font-weight:bold">&lt;groupId&gt;</span>io.glitchlib<span style="color:#309;font-weight:bold">&lt;/groupId&gt;</span>
+    <span style="color:#309;font-weight:bold">&lt;artifactId&gt;</span>glitch-all<span style="color:#309;font-weight:bold">&lt;/artifactId&gt;</span>
+    <span style="color:#309;font-weight:bold">&lt;version&gt;</span>${glitch.version}<span style="color:#309;font-weight:bold">&lt;/version&gt;</span>
   <span style="color:#309;font-weight:bold">&lt;/dependency&gt;</span>
 <span style="color:#309;font-weight:bold">&lt;/dependencies&gt;</span></code></pre></div>
 <h1 id="ide-setup">IDE Setup</h1>
