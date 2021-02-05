@@ -1,0 +1,23 @@
+name: Github Pages
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+      - uses: peaceiris/actions-hugo@v2
+        with:          
+          extended: true    # important: required for generates css file from scss files
+      - run: hugo --minify
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}   # or your own token to deploy pages
+          publish_dir: ./public
+
